@@ -2,7 +2,6 @@ const ROOMS = require("../data/rooms");
 const Room = require("../models/room");
 
 class RoomsService {
-
   constructor(){
     this.roomList = ROOMS
   }
@@ -15,6 +14,10 @@ class RoomsService {
 
   getRooms(){
     return this.roomList
+  }
+
+  getById(roomId){
+    return this.roomList.find((room)=> room.id === roomId)
   }
 }
 
