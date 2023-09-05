@@ -16,7 +16,6 @@ router.get('/:id', (request,response)=>{
   response.status(RESPONSE_CODE.ok).json(room)
 })
 
-
 router.post('/', (request,response)=>{
   let room = request.body
   let roomCreated = roomsService.createRoom(room.name)
