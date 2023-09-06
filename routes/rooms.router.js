@@ -18,7 +18,7 @@ router.get('/:id', (request,response)=>{
 
 router.post('/', (request,response)=>{
   let room = request.body
-  let roomCreated = roomsService.createRoom(room.name)
+  let roomCreated = roomsService.createRoom(room.name, room.user)
   response
   .status(RESPONSE_CODE.created)
   .json(roomCreated)

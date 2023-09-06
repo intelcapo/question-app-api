@@ -6,8 +6,8 @@ class RoomsService {
     this.roomList = ROOMS
   }
 
-  createRoom(roomName){
-    let roomToCreate = new Room(roomName)
+  createRoom(roomName, user){
+    let roomToCreate = new Room(roomName, user)
     this.roomList.push(roomToCreate)
     return roomToCreate
   }

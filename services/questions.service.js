@@ -1,11 +1,8 @@
 const QUESTIONS = require("../data/questions");
-const CoreService = require("./core.service");
-const RoomsService = require('./rooms.service');
-const UsersService = require("./users.service");
+const Question = require("../models/question");
+const VotesService = require("../services/votes.service")
 
-const coreService = new CoreService()
-const roomService = new RoomsService()
-const usersService = new UsersService()
+const votesService = new VotesService()
 
 class QuestionsService {
   constructor(){
@@ -21,31 +18,32 @@ class QuestionsService {
   }
 
   create(question){
-    const {description,roomId,userId} = question
-    const newQuestion = {
-      id: coreService.getGUID(),
-      description,
-      votes: 1,
-      creationDate: new Date(),
-      room: roomService.getById(roomId),
-      user: usersService.getById(userId)
-    }
+    const {description,roomId,user} = question
+    let newQuestion = new Question(description, roomId, user)
     this.questions.push(newQuestion)
     return newQuestion
   }
 
-  addVote(questionId){
+  addVote(questionId, user){
     let indexQuestion = this.questions.findIndex(question => question.id == questionId)
     if(indexQuestion>=0){
       this.questions[indexQuestion].votes++
+      votesService.addVote(questionId,user)
     }
     return this.questions[indexQuestion]
   }
 
-  removeVote(questionId){
+  removeVote(questionId, user){
     let indexQuestion = this.questions.findIndex(question => question.id == questionId)
     if(indexQuestion>=0){
-      this.questions[indexQuestion].votes--
+      let votes = this.questions[indexQuestion].votes
+      if(votes > 0){
+        this.questions[indexQuestion].votes--
+      }else{
+        this.questions[indexQuestion].votes = 0
+      }
+
+      votesService.removeVote(questionId,user)
     }
     return this.questions[indexQuestion]
   }
