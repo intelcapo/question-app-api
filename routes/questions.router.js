@@ -24,13 +24,15 @@ router.post('/', (request, response)=>{
 
 router.put('/:id/addVote', (request, response)=>{
   const {id} = request.params
-  let questionUpdated = questionsService.addVote(id)
+  const user = request.body
+  let questionUpdated = questionsService.addVote(id, user)
   response.status(RESPONSE_CODE.ok).json(questionUpdated)
 })
 
 router.put('/:id/removeVote', (request, response)=>{
   const {id} = request.params
-  let questionUpdated = questionsService.removeVote(id)
+  const user = request.body
+  let questionUpdated = questionsService.removeVote(id, user)
   response.status(RESPONSE_CODE.ok).json(questionUpdated)
 })
 
