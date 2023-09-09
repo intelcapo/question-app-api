@@ -16,6 +16,7 @@ class Question{
       this.creationDate = new Date(),
       this.room = roomService.getById(roomId),
       this.user = this._validateUser(user)
+      this.isAnswered = false
       this._createVote()
 
   }
