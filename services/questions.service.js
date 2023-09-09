@@ -25,27 +25,34 @@ class QuestionsService {
   }
 
   addVote(questionId, user){
-    let indexQuestion = this.questions.findIndex(question => question.id == questionId)
+    let indexQuestion = this.getQuestionById(questionId)
     if(indexQuestion>=0){
-      this.questions[indexQuestion].votes++
+
       votesService.addVote(questionId,user)
+      this.questions[indexQuestion].votes = votesService.getVotesByQuestionId(questionId)
     }
     return this.questions[indexQuestion]
   }
 
   removeVote(questionId, user){
-    let indexQuestion = this.questions.findIndex(question => question.id == questionId)
+    let indexQuestion = this.getQuestionById(questionId)
     if(indexQuestion>=0){
-      let votes = this.questions[indexQuestion].votes
-      if(votes > 0){
-        this.questions[indexQuestion].votes--
-      }else{
-        this.questions[indexQuestion].votes = 0
-      }
-
       votesService.removeVote(questionId,user)
+      this.questions[indexQuestion].votes = votesService.getVotesByQuestionId(questionId)
     }
     return this.questions[indexQuestion]
+  }
+
+  updateAnswerStatus(questionId){
+    let indexQuestion = this.getQuestionById(questionId)
+    if(indexQuestion>=0){
+      this.questions[indexQuestion].isAnswered = true
+    }
+    return this.questions[indexQuestion]
+  }
+
+  getQuestionById(questionId){
+    return  this.questions.findIndex(question => question.id == questionId)
   }
 }
 

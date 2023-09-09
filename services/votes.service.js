@@ -60,6 +60,15 @@ class VotesService {
     return this.votes.filter(vote => vote.question.room.id == roomId)
   }
 
+  getVotesByQuestionId(questionId){
+    let amountVotes = 0
+    let indexVote = this.getIndexVoteByQuestionId(questionId)
+    if(indexVote != -1){
+      amountVotes=  this.votes[indexVote].users.length
+    }
+    return amountVotes
+  }
+
 }
 
 module.exports = VotesService

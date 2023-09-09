@@ -36,4 +36,11 @@ router.put('/:id/removeVote', (request, response)=>{
   response.status(RESPONSE_CODE.ok).json(questionUpdated)
 })
 
+router.put('/:id/updateAnswerStatus', (request, response)=>{
+  const {id} = request.params
+  let questionUpdated = questionsService.updateAnswerStatus(id)
+  response.status(RESPONSE_CODE.ok).json(questionUpdated)
+})
+
 module.exports = router
+
